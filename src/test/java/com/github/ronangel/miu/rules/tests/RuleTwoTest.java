@@ -11,13 +11,23 @@ import static junit.framework.TestCase.assertEquals;
 
 public class RuleTwoTest {
 
+    private Rule ruleTwo = new RuleTwo();
+
     @Test
     public void shouldReturnOneTheoremMII() {
-        Rule ruleTwo = new RuleTwo();
         Theorem theorem = Theorem.Axioms.MI;
         List<Theorem> resultingTheorems = ruleTwo.apply(theorem);
 
         assertEquals(1, resultingTheorems.size());
         assertEquals(Theorem.create("MII"), resultingTheorems.get(0));
+    }
+
+    @Test
+    public void shouldReturnOneTheoremMIUIU() {
+        Theorem theorem = Theorem.create("MIU");
+        List<Theorem> resultingTheorems = ruleTwo.apply(theorem);
+
+        assertEquals(1, resultingTheorems.size());
+        assertEquals(Theorem.create("MIUIU"), resultingTheorems.get(0));
     }
 }
