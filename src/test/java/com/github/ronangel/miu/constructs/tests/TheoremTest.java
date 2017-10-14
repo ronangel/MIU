@@ -1,10 +1,12 @@
 package com.github.ronangel.miu.constructs.tests;
 
+import com.github.ronangel.miu.constructs.Derivation;
 import com.github.ronangel.miu.constructs.Symbols;
 import com.github.ronangel.miu.constructs.Theorem;
 import org.junit.Test;
 
 import static junit.framework.TestCase.assertEquals;
+import static org.mockito.Mockito.mock;
 
 public class TheoremTest {
 
@@ -118,5 +120,13 @@ public class TheoremTest {
         theorem = theorem.replace("UU".length(), "", 2);
 
         assertEquals(Theorem.create("MI"), theorem);
+    }
+
+    @Test
+    public void shouldTakeDerivationInConstructor() {
+        Derivation derivation = mock(Derivation.class);
+        Theorem theorem = Theorem.create("MI", derivation);
+
+        assertEquals(derivation, theorem.getDerivation());
     }
 }

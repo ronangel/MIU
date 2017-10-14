@@ -1,27 +1,31 @@
 package com.github.ronangel.miu.constructs;
 
 public class Theorem {
-
-    public Theorem replace(int charsToReplace, String with, int startingIndex) {
-        return Theorem.create(string.substring(0, startingIndex) + with + string.substring(startingIndex + charsToReplace));
-    }
-
-    public static class Axioms {
-
-        public static final Theorem MI = new Theorem("MI");
-
-    }
-
     private final String string;
 
-    private Theorem(String string) {
+    private final Derivation derivation;
+
+    public Derivation getDerivation() {
+        return derivation;
+    }
+
+    private Theorem(String string, Derivation derivation) {
         this.string = string;
+        this.derivation = derivation;
     }
 
     public static Theorem create(String string) {
+        return create(string, new Derivation());
+    }
+
+    public static Theorem create(String string, Derivation derivation) {
         validate(string);
 
-        return new Theorem(string);
+        return new Theorem(string, derivation);
+    }
+
+    public Theorem replace(int charsToReplace, String with, int startingIndex) {
+        return Theorem.create(string.substring(0, startingIndex) + with + string.substring(startingIndex + charsToReplace));
     }
 
     public boolean endsWith(Symbols s) {
@@ -72,4 +76,24 @@ public class Theorem {
     public int hashCode() {
         return string.hashCode();
     }
+
+    public static class Axioms {
+
+        public static final Theorem MI = Theorem.create("MI");
+    }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
