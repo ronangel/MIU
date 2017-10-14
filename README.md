@@ -1,2 +1,2 @@
 # MIU
-My attempt at a solution the MIU problem (just for fun)
+My attempt at a solution to the MIU problem (just for fun)
