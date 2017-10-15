@@ -16,6 +16,7 @@ public class Driver {
         solver.addRule(new RuleTwo());
         solver.addRule(new RuleThree());
         solver.addRule(new RuleFour());
+        solver.setSolutionStepLimit(1000000);
 
         solver.setObjective(Theorem.create("MU"));
 
