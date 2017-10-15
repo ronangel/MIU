@@ -67,6 +67,29 @@ public class TheoremTest {
         assertEquals(Theorem.create("MIIU"), theorem);
     }
 
+    @Test
+    public void shouldAppendToExistingDerivationOnAppendString() {
+        Theorem theorem = Theorem.create("MI");
+        theorem = theorem.append("U");
+
+        Derivation expectedDerivation = new Derivation(Theorem.create("MI")).
+                                                append(Theorem.create("MIU"));
+
+        assertEquals(expectedDerivation, theorem.getDerivation());
+    }
+
+    @Test
+    public void shouldAppendToExistingDerivationOnAppendSymbol() {
+        Theorem theorem = Theorem.create("MI");
+        theorem = theorem.append(Symbols.U);
+
+        Derivation expectedDerivation = new Derivation(Theorem.create("MI")).
+                append(Theorem.create("MIU"));
+
+        assertEquals(expectedDerivation, theorem.getDerivation());
+    }
+
+
     @Test(expected = IllegalArgumentException.class)
     public void shouldThrowWhenAppendingInvalidString() {
         Theorem theorem = Theorem.create("MI");
@@ -123,10 +146,34 @@ public class TheoremTest {
     }
 
     @Test
-    public void shouldTakeDerivationInConstructor() {
-        Derivation derivation = mock(Derivation.class);
-        Theorem theorem = Theorem.create("MI", derivation);
+    public void shouldAppendToExistingDerivationOnReplace() {
+        Theorem theorem = Theorem.create("MIII");
+        theorem = theorem.replace("III".length(), "U", 1);
 
-        assertEquals(derivation, theorem.getDerivation());
+        Derivation expectedDerivation = new Derivation(Theorem.create("MIII")).
+                                                append(Theorem.create("MU"));
+
+        assertEquals(expectedDerivation, theorem.getDerivation());
+    }
+
+    @Test
+    public void shouldBeItsOwnDerivationWhenNoDerivationIsProvided() {
+        Theorem theorem = Theorem.create("MI");
+        Derivation derivation = theorem.getDerivation();
+
+        Derivation expectedDerivation = new Derivation(Theorem.create("MI"));
+
+        assertEquals(expectedDerivation, derivation);
+    }
+
+    @Test
+    public void shouldAppendNewTheoremToDerivation() {
+        Derivation derivation = new Derivation(Theorem.create("MI"));
+        Theorem theorem = Theorem.create("MIU", derivation);
+
+        Derivation expectedDerivation = new Derivation(Theorem.create("MI")).
+                                                append(Theorem.create("MIU"));
+
+        assertEquals(expectedDerivation, theorem.getDerivation());
     }
 }

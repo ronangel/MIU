@@ -25,4 +25,31 @@ public class AvailableTheoremsTest {
         AvailableTheorems availableTheorems = new AvailableTheorems(new TheoremPriorityComparer());
         assertNull(availableTheorems.next());
     }
+
+    @Test
+    public void shouldReturnCorrectSizeWhenEmpty() {
+        AvailableTheorems availableTheorems = new AvailableTheorems(new TheoremPriorityComparer());
+
+        assertEquals(0, availableTheorems.size());
+    }
+
+    @Test
+    public void shouldReturnCorrectSizeAfterAddingTheorems() {
+        AvailableTheorems availableTheorems = new AvailableTheorems(new TheoremPriorityComparer());
+
+        availableTheorems.add(Theorem.create("MI"));
+        availableTheorems.add(Theorem.create("MIU"));
+
+        assertEquals(2, availableTheorems.size());
+    }
+
+    @Test
+    public void shouldReturnCorrectSizeAfterTakingOneTheorem() {
+        AvailableTheorems availableTheorems = new AvailableTheorems(new TheoremPriorityComparer());
+        availableTheorems.add(Theorem.create("MI"));
+        availableTheorems.add(Theorem.create("MIU"));
+        availableTheorems.next();
+
+        assertEquals(1, availableTheorems.size());
+    }
 }

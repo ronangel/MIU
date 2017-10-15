@@ -3,29 +3,43 @@ package com.github.ronangel.miu.constructs;
 public class Theorem {
     private final String string;
 
-    private final Derivation derivation;
+    private Derivation derivation;
 
     public Derivation getDerivation() {
         return derivation;
     }
 
-    private Theorem(String string, Derivation derivation) {
-        this.string = string;
+    private void setDerivation(Derivation derivation) {
         this.derivation = derivation;
     }
 
+    private Theorem(String string) {
+        this.string = string;
+    }
+
     public static Theorem create(String string) {
-        return create(string, new Derivation());
+        return create(string, null);
     }
 
     public static Theorem create(String string, Derivation derivation) {
         validate(string);
 
-        return new Theorem(string, derivation);
+        Theorem theorem = new Theorem(string);
+
+        if (derivation == null) {
+            derivation = new Derivation(theorem);
+        }
+        else {
+            derivation = derivation.append(theorem);
+        }
+
+        theorem.setDerivation(derivation);
+        return theorem;
     }
 
     public Theorem replace(int charsToReplace, String with, int startingIndex) {
-        return Theorem.create(string.substring(0, startingIndex) + with + string.substring(startingIndex + charsToReplace));
+        String newString = string.substring(0, startingIndex) + with + string.substring(startingIndex + charsToReplace);
+        return Theorem.create(newString, derivation);
     }
 
     public boolean endsWith(Symbols s) {
@@ -33,11 +47,11 @@ public class Theorem {
     }
 
     public Theorem append(Symbols s) {
-        return Theorem.create(string + s.toString());
+        return Theorem.create(string + s.toString(), derivation);
     }
 
     public Theorem append(String str) {
-        return Theorem.create(string + str);
+        return Theorem.create(string + str, derivation);
     }
 
     private static void validate(String string) {

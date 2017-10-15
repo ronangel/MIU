@@ -11,19 +11,20 @@ public class TheoremCacheTest {
     private TheoremCache theoremCache = new TheoremCache();
 
     @Test
-    public void shouldReturnTheoremNotPresent() {
+    public void shouldReturnTheoremIsNew() {
         Theorem theorem = Theorem.create("MI");
-        boolean present = theoremCache.put(theorem);
+        boolean isNew = theoremCache.put(theorem);
 
-        assertFalse(present);
+        assertTrue(isNew);
     }
 
     @Test
-    public void shouldReturnTheremIsPresent() {
+    public void shouldReturnTheremIsNotNew() {
         Theorem theorem = Theorem.create("MI");
         theoremCache.put(theorem);
-        boolean present = theoremCache.put(theorem);
+        boolean isNew = theoremCache.put(theorem);
 
-        assertTrue(present);
+        assertFalse(isNew);
     }
+
 }

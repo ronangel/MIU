@@ -20,4 +20,8 @@ public class AvailableTheorems {
     public Theorem next() {
         return theoremQueue.poll();
     }
+
+    public int size() {
+        return theoremQueue.size();
+    }
 }

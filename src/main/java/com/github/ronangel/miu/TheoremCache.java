@@ -10,7 +10,6 @@ public class TheoremCache {
     private Set<Theorem> cache = new HashSet<>();
 
     public boolean put(Theorem theorem) {
-
-        return !cache.add(theorem);
+        return cache.add(theorem);
     }
 }
